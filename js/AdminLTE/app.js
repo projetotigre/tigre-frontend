@@ -21,13 +21,13 @@ $(function() {
         //If window is small enough, enable sidebar push menu
         if ($(window).width() <= 992) {
             $('.row-offcanvas').toggleClass('active');
-            $('.left-side').removeClass("collapse-left");
-            $(".right-side").removeClass("strech");
-            $('.row-offcanvas').toggleClass("relative");
+            $('.left-side').removeClass("collapse-left",{duration:500});
+            $(".right-side").removeClass("strech",{duration:500});
+            $('.row-offcanvas').toggleClass("relative",{duration:500});
         } else {
             //Else, enable content streching
-            $('.left-side').toggleClass("collapse-left");
-            $(".right-side").toggleClass("strech");
+            $('.left-side').toggleClass("collapse-left",{duration:500});
+            $(".right-side").toggleClass("strech",{duration:500});
         }
     });
 
