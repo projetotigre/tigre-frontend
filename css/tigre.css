@@ -29,7 +29,7 @@ body, html {
 	font-size: 1.3em;
 	color: #fff;
 	margin: 15px 0px;
-	margin-left: 20%;	
+	margin-left: 20px;
 	/*border: solid 1px #f00;*/
 	float: left;
 }
@@ -77,3 +77,42 @@ body, html {
 .right-side > .content-header{	
 	padding: 11px 15px 10px 20px;
 }
+
+.right-side > .content-header > .breadcrumb{
+	top: 8px;
+}
+
+.config-btn{
+	position: fixed;
+	top: 150px;
+	right: 200px;
+	background-color: rgba(0, 0, 0, 0.701961);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 5px;
+	padding: 10px 15px;
+	font-size: 16px;
+	z-index: 999999;
+	cursor: pointer;
+	color: rgb(221, 221, 221);
+}
+.config-box{
+	padding: 10px;
+	position: fixed;
+	top: 130px;
+	right: 0px;
+	background-color: rgb(255, 255, 255);
+	border: 3px solid rgba(0, 0, 0, 0.701961);
+	width: 200px;
+	z-index: 999999;
+	background-position: initial initial;
+	background-repeat: initial initial;
+}
+
+.config-box h4{
+	margin: 0 0 5px 0;
+	border-bottom: 1px dashed #ddd;
+	padding-bottom: 3px;
+}
+
