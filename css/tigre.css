@@ -106,13 +106,19 @@ body, html {
 	border: 3px solid rgba(0, 0, 0, 0.701961);
 	width: 200px;
 	z-index: 999999;
+	height: 500px;
 	background-position: initial initial;
 	background-repeat: initial initial;
+	overflow-y: scroll;
 }
 
 .config-box h4{
 	margin: 0 0 5px 0;
 	border-bottom: 1px dashed #ddd;
 	padding-bottom: 3px;
+}
+.config-box h3{ 
+	margin: 0; 
+	padding: 0;	
 }
 
