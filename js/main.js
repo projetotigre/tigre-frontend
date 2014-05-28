@@ -16,8 +16,9 @@ $('document').ready(function(){
 		}
 	});	
 
+
 	//faz uma requisicação ajax e exibe os dados de acordo com um template
-	$.getJSON('http://localhost/tigre/frontend/data/areas_atuacao', function(data){
+	$.getJSON('http://107.170.175.95/api/v1/areas_atuacao', function(data){
 
 		var data =  { areas_atuacao:data}; //seta os dados na key areas_atuacao
 		var template = $('#areas-atuacao-tpl').html(); //pega o template		
