@@ -48,11 +48,13 @@ $('document').ready(function()
 
 		function carregaDados(ano, natureza_juridica)
 		{
-			var ano = ano | 2014;
-			var natureza_juridica = natureza_juridica | 6;
+			var ano = ano || 2014;
+
+			console.log(ano);
+			var natureza_juridica = natureza_juridica || 6;
 
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
-			$.getJSON('http://107.170.175.95/api/v1/convenios', { ano: ano },function(data){
+			$.getJSON('http://107.170.175.95/api/v1/convenios', { 'ano': ano },function(data){
 				
 				var template = $('#convenios-table-tpl').html(); //pega o template
         		var html = Mustache.to_html(template, {convenios:data.organizacoes}); //insere as variaveis no template
@@ -81,12 +83,13 @@ $('document').ready(function()
 						//intanciando marcadores
 			            var marker = new google.maps.Marker({
 			              position: latLng,
-			              title: "Meu ponto personalizado! :-D",
+			              title: ponto.nome,
 			              map: map
 			            });
 
+
 						google.maps.event.addListener(marker, 'click', function() {
-					          infowindow.setContent(address);
+					          infowindow.setContent(ponto.nome);
 					          infowindow.open(map, marker);
 					    });
 
@@ -105,8 +108,7 @@ $('document').ready(function()
 
 		google.maps.event.addDomListener(document.getElementById('ano'), 'change', function() 
 		{
-
-			$('#ano option:selected').val()
+			var ano = $('#ano option:selected').val()
 				
 			//apaga os markers		
 			jQuery.each(markers, function(i, marker){
