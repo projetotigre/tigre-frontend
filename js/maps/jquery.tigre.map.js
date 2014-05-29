@@ -25,6 +25,7 @@ $('document').ready(function()
 
 	var location = new google.maps.LatLng(-15.7217621,-47.9382362);
 	var latLng;	
+	var infowindow = new google.maps.InfoWindow();
 
 	var cityCircle;
 
@@ -40,19 +41,22 @@ $('document').ready(function()
 		  	mapTypeId: google.maps.MapTypeId.TERRAIN
 		};
 
-		var map = new google.maps.Map(document.getElementById('map'), mapOptions);
-		var template = $('#convenios-table-tpl').html(); //pega o template
+		var map = new google.maps.Map(document.getElementById('map'), mapOptions);		
+		var markerCluster;
+		var markers = [];
+		var circles = [];
 
-		function carregaDados()
+		function carregaDados(ano, natureza_juridica)
 		{
+			var ano = ano | 2014;
+			var natureza_juridica = natureza_juridica | 6;
+
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
-			$.getJSON('http://107.170.175.95/api/v1/convenios', function(data){
-
-				var markers = [];
-
-        		var html = Mustache.to_html(template, { convenios:data.organizacoes}); //insere as variaveis no template
-
-        		$('#table-convenios').append(html); //exibe na div com #areas-atuacao
+			$.getJSON('http://107.170.175.95/api/v1/convenios', { ano: ano },function(data){
+				
+				var template = $('#convenios-table-tpl').html(); //pega o template
+        		var html = Mustache.to_html(template, {convenios:data.organizacoes}); //insere as variaveis no template
+        		$('#table-convenios').append(html); 
 
 				$.each(data.organizacoes, function(index, ponto){
 
@@ -61,10 +65,10 @@ $('document').ready(function()
 					convertAddressToLatLng(address, function( latLng ){
 
 						convenioOptions = {
-					  		strokeColor: '#00ff00',
+					  		strokeColor: '#0000ff',
 					  		strokeOpacity: 0.8,
 					  		strokeWeight: 2,
-					  		fillColor: '#00ff00',
+					  		fillColor: '#0000ff',
 					  		fillOpacity: 0.35,
 					  		map: map,
 					  		center: latLng,
@@ -74,23 +78,49 @@ $('document').ready(function()
 					    // Add the circle for this city to the map.
 					    cityCircle = new google.maps.Circle(convenioOptions);
 
-						/*//intanciando marcadores
+						//intanciando marcadores
 			            var marker = new google.maps.Marker({
-			              position: result,
+			              position: latLng,
 			              title: "Meu ponto personalizado! :-D",
 			              map: map
 			            });
 
-						markers.push(marker);*/
+						google.maps.event.addListener(marker, 'click', function() {
+					          infowindow.setContent(address);
+					          infowindow.open(map, marker);
+					    });
+
+						markers.push(marker);
+						circles.push(cityCircle);
 					});
 
         		});
 
 				markerCluster = new MarkerClusterer(map, markers);
+
 			});
 		}
 
 		carregaDados();
+
+		google.maps.event.addDomListener(document.getElementById('ano'), 'change', function() 
+		{
+
+			$('#ano option:selected').val()
+				
+			//apaga os markers		
+			jQuery.each(markers, function(i, marker){
+			  	marker.setMap(null);
+			});
+
+			//apaga os circulos
+			jQuery.each(circles, function(i, circle){
+			  	circle.setMap(null);
+			});
+
+			carregaDados(ano);	  
+
+		});
 	}
 
 	google.maps.event.addDomListener(window, 'load', initialize);
