@@ -45,13 +45,12 @@ $('document').ready(function()
 		var markerCluster;
 		var markers = [];
 		var circles = [];
+		var ano, natureza_juridica;
 
 		function carregaDados(ano, natureza_juridica)
 		{
-			var ano = ano || 2014;
-
-			console.log(ano);
-			var natureza_juridica = natureza_juridica || 6;
+			ano = ano || 2014;
+			natureza_juridica = natureza_juridica || '';			
 
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
 			$.getJSON('http://107.170.175.95/api/v1/convenios', { 'ano': ano },function(data){
@@ -74,7 +73,7 @@ $('document').ready(function()
 					  		fillOpacity: 0.35,
 					  		map: map,
 					  		center: latLng,
-					  		radius: Math.sqrt(ponto.valor_repasse_uniao) * 100
+					  		radius: Math.sqrt(ponto.valor_repasse_uniao) * 80
 					  	};
 
 					    // Add the circle for this city to the map.
@@ -89,7 +88,7 @@ $('document').ready(function()
 
 
 						google.maps.event.addListener(marker, 'click', function() {
-					          infowindow.setContent(ponto.nome);
+					          infowindow.setContent('R$' + ponto.valor_repasse_uniao +' - ' +ponto.nome);
 					          infowindow.open(map, marker);
 					    });
 
@@ -106,7 +105,7 @@ $('document').ready(function()
 
 		carregaDados();
 
-		google.maps.event.addDomListener(document.getElementById('ano'), 'change', function() 
+		google.maps.event.addDomListener($('#ano')[0], 'change', function() 
 		{
 			var ano = $('#ano option:selected').val()
 				
@@ -114,15 +113,47 @@ $('document').ready(function()
 			jQuery.each(markers, function(i, marker){
 			  	marker.setMap(null);
 			});
+			
+  			markers = [];
 
 			//apaga os circulos
 			jQuery.each(circles, function(i, circle){
 			  	circle.setMap(null);
 			});
 
-			carregaDados(ano);	  
+			circles = [];
+			carregaDados(ano,natureza_juridica);
 
 		});
+
+
+		$(".nj-checkbox").change(function() {
+		    google.maps.event.trigger($(this)[0], 'change');
+		});
+
+		google.maps.event.addDomListener($('#naturezas-juridicas')[0], 'change', function() 
+		{
+
+			var ano = $('#ano option:selected').val()
+				
+			//apaga os markers		
+			jQuery.each(markers, function(i, marker){
+			  	marker.setMap(null);
+			});
+			
+  			markers = [];
+
+			//apaga os circulos
+			jQuery.each(circles, function(i, circle){
+			  	circle.setMap(null);
+			});
+
+			circles = [];
+			carregaDados(ano,natureza_juridica);
+
+		});
+
+
 	}
 
 	google.maps.event.addDomListener(window, 'load', initialize);
