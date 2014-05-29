@@ -32,15 +32,11 @@ $('document').ready(function(){
 	//faz uma requisicação ajax e exibe os dados de acordo com um template
 	$.getJSON('http://107.170.175.95/api/v1/naturezas_juridicas', function(data){
 
-
 		var template = $('#naturezas-juridicas-tpl').html(); //pega o template		
 		var html = Mustache.to_html(template, { naturezas_juridicas:data}); //insere as variaveis no template
 		
 		$('#naturezas-juridicas').html(html); //exibe na div com #areas-atuacao		
 	});
-	
-	
-	console.log(years());
 
 	var template = $('#select-ano-tpl').html(); //pega o template		
 	var html = Mustache.to_html(template, { anos: years()}); //insere as variaveis no template
