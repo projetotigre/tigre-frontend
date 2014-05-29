@@ -60,19 +60,20 @@ $('document').ready(function()
 
 		 var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    var template = $('#convenios-table-tpl').html(); //pega o template
+    		var template = $('#convenios-table-tpl').html(); //pega o template
+
 
 		 function carregaDados()
 		 {
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
 			$.getJSON('http://107.170.175.95/api/v1/convenios', function(data){
 
+
 				var markers = [];
 
-        var html = Mustache.to_html(template, { convenios:data.organizacoes}); //insere as variaveis no template
+        		var html = Mustache.to_html(template, { convenios:data.organizacoes}); //insere as variaveis no template
 
-        $('#table-convenios').append(html); //exibe na div com #areas-atuacao
-
+        		$('#table-convenios').append(html); //exibe na div com #areas-atuacao
 
 				$.each(data.organizacoes, function(index, ponto) {
 
@@ -111,6 +112,7 @@ $('document').ready(function()
 		}
 
 		carregaDados();
+
 
 	  /*// Construct the circle for each value in citymap.
 	  // Note: We scale the area of the circle based on the population.
