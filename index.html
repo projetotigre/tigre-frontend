@@ -47,6 +47,11 @@
         <div class="no-print config-box open">
             <h3>Filtre por:</h3>
 
+
+
+
+            <!-- 
+                
             <h4>Região</h4>
             <div class="form-group no-margin">
                 <div class=".radio">
@@ -56,17 +61,30 @@
                 </div>
             </div>
 
-            <h4>Area de Atuação</h4>
+             -->
+    
+            <h4>Ano</h4>
+            <select name="ano" id="ano">
+                <script id="select-ano-tpl" type="text/template">
+                    {{#anos}}
+                        <option value="{{.}}">{{.}}</option>
+                    {{/anos}}
+                </script>
+            </select>
+
+            <br>
+
+            <h4>Natureza Jurídica</h4>
         
-            <div class="form-group no-margin" id="areas-atuacao">                
-                <script id="areas-atuacao-tpl" type="text/template">
-                {{#areas_atuacao}}
+            <div class="form-group no-margin" id="naturezas-juridicas">                
+                <script id="naturezas-juridicas-tpl" type="text/template">
+                {{#naturezas_juridicas}}
                     <div class=".checkbox">
                         <label>
-                            <input type="checkbox" value="{{id}}"> <span>{{descricao}}</span>
+                            <input type="checkbox" value="{{id}}"> <span>{{nome}}</span>
                         </label>
                     </div>
-                {{/areas_atuacao}}
+                {{/naturezas_juridicas}}
 
                 </script>
 
