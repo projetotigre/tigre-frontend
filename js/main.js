@@ -1,3 +1,15 @@
+function years(startYear) 
+{
+    var currentYear = new Date().getFullYear(), years = [];
+    startYear = startYear || 1980;
+
+    while ( startYear <= currentYear ) {
+        years.push(currentYear--);
+    } 
+
+    return years;
+}
+
 $('document').ready(function(){	
 	
 	$('.config-btn').click(function()
@@ -18,13 +30,20 @@ $('document').ready(function(){
 
 
 	//faz uma requisicação ajax e exibe os dados de acordo com um template
-	$.getJSON('http://107.170.175.95/api/v1/areas_atuacao', function(data){
+	$.getJSON('http://107.170.175.95/api/v1/naturezas_juridicas', function(data){
 
-		var data =  { areas_atuacao:data}; //seta os dados na key areas_atuacao
-		var template = $('#areas-atuacao-tpl').html(); //pega o template		
-		var html = Mustache.to_html(template, data); //insere as variaveis no template
+		var template = $('#naturezas-juridicas-tpl').html(); //pega o template		
+		var html = Mustache.to_html(template, { naturezas_juridicas:data}); //insere as variaveis no template
 		
-		$('#areas-atuacao').html(html); //exibe na div com #areas-atuacao
-		
+		$('#naturezas-juridicas').html(html); //exibe na div com #areas-atuacao		
 	});
+	
+	
+
+	console.log(years());
+
+	var template = $('#select-ano-tpl').html(); //pega o template		
+	var html = Mustache.to_html(template, { anos: years()}); //insere as variaveis no template
+	$('#ano').html(html); //exibe na div com #areas-atuacao
+
 });

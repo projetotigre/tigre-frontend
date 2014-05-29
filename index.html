@@ -28,7 +28,7 @@
     <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
     <!-- Theme style -->
     <link href="css/AdminLTE.css" rel="stylesheet" type="text/css" />
-    
+
 
     <link href="css/tigre.css" rel="stylesheet" type="text/css" />
 
@@ -42,11 +42,32 @@
       <body class="skin-blue">
 
         <div class="no-print open config-btn"><i class="fa fa-gear"></i></div>
-    
+
+        <table id="table-convenios" class="show-blind">
+
+          <thead>
+            <tr>
+              <th scope="col">Organização</th>
+              <th scope="col">Valor Repasse União</th>
+              <th scope="col">Endereço</th>
+            </tr>
+          </thead>
+
+          <script id="convenios-table-tpl" type="text/template">
+            {{#convenios}}
+              <tr>
+                <td>{{nome}}</td>
+                <td>{{valor_repasse_uniao}}</td>
+                <td>{{endereco}}, {{cidade}}, {{estado}}</td>
+              </tr>
+            {{/convenios}}
+          </script>
+        </table>
+
         <!-- Config Box -->
         <div class="no-print config-box open">
             <h3>Filtre por:</h3>
-
+            <!--
             <h4>Região</h4>
             <div class="form-group no-margin">
                 <div class=".radio">
@@ -55,26 +76,38 @@
                     <label><input name="skins" type="radio"> Municipal</label> <br>
                 </div>
             </div>
+            -->
 
-            <h4>Area de Atuação</h4>
-        
-            <div class="form-group no-margin" id="areas-atuacao">                
-                <script id="areas-atuacao-tpl" type="text/template">
-                {{#areas_atuacao}}
+            <h4>Ano</h4>
+            <select name="ano" id="ano">
+                <script id="select-ano-tpl" type="text/template">
+                    {{#anos}}
+                        <option value="{{.}}">{{.}}</option>
+                    {{/anos}}
+                </script>
+            </select>
+
+            <br>
+
+            <h4>Natureza Jurídica</h4>
+
+            <div class="form-group no-margin" id="naturezas-juridicas">
+                <script id="naturezas-juridicas-tpl" type="text/template">
+                {{#naturezas_juridicas}}
                     <div class=".checkbox">
                         <label>
-                            <input type="checkbox" value="{{id}}"> <span>{{descricao}}</span>
+                            <input type="checkbox" value="{{id}}"> <span>{{nome}}</span>
                         </label>
                     </div>
-                {{/areas_atuacao}}
+                {{/naturezas_juridicas}}
 
                 </script>
 
             </div>
-                        
-        </div>  
-        <!-- End Config Box -->  
-        
+
+        </div>
+        <!-- End Config Box -->
+
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="index.html" class="logo">
@@ -93,9 +126,9 @@
                 </a> -->
 
                 <h1 class="title">Transparência dos Investimentos Governamentais Rastreados Eletronicamente</h1>
-                
+
             </header>
-            <div class="wrapper row-offcanvas row-offcanvas-left" style="height:80%">                
+            <div class="wrapper row-offcanvas row-offcanvas-left" style="height:80%">
                 <!-- Right side column. Contains the navbar and content of the page -->
                 <aside class="right-side strech">
                     <!-- Content Header (Page header) -->
@@ -125,7 +158,7 @@
             <script src="https://maps.google.com/maps/api/js?sensor=false"></script>
 
             <!-- jQuery 2.0.2 -->
-            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>            
+            <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
             <script src="js/maps/gmap3.js"></script>
             <script src="js/maps/jquery.tigre.map.js"></script>
@@ -144,7 +177,7 @@
 
 
             <!-- AdminLTE for demo purposes -->
-            <script src="js/main.js"></script>            
+            <script src="js/main.js"></script>
 
             <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
             <script>
