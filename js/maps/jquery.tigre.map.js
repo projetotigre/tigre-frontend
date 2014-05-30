@@ -20,6 +20,7 @@ function convertAddressToLatLng(address, geocode_callback)
 }
 
 
+
 $('document').ready(function()
 {
 
@@ -47,60 +48,81 @@ $('document').ready(function()
 		var circles = [];
 		var ano, natureza_juridica;
 
+		function clearMap(){
+			//apaga os markers		
+			jQuery.each(markers, function(i, marker){
+			  	marker.setMap(null);
+			});
+			
+			markers = [];
+
+			//apaga os circulos
+			jQuery.each(circles, function(i, circle){
+			  	circle.setMap(null);
+			});
+			circles = [];
+		}
+
 		function carregaDados(ano, natureza_juridica)
 		{
 			ano = ano || 2014;
 			natureza_juridica = natureza_juridica || '';			
 
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
-			$.getJSON('http://107.170.175.95/api/v1/convenios', { 'ano': ano },function(data){
-				
-				var template = $('#convenios-table-tpl').html(); //pega o template
-        		var html = Mustache.to_html(template, {convenios:data.organizacoes}); //insere as variaveis no template
-        		$('#table-convenios').append(html); 
+			$.getJSON('http://107.170.175.95/api/v1/convenios', { 'ano': ano, 'natureza_juridica': natureza_juridica },function(data){
+							
+        		if(data.organizacoes.length)
+        		{
 
-				$.each(data.organizacoes, function(index, ponto){
-
-					var address = ponto.endereco + ', ' + ponto.cidade + ', ' + ponto.estado;
-
-					convertAddressToLatLng(address, function( latLng ){
-
-						convenioOptions = {
-					  		strokeColor: '#0000ff',
-					  		strokeOpacity: 0.8,
-					  		strokeWeight: 2,
-					  		fillColor: '#0000ff',
-					  		fillOpacity: 0.35,
-					  		map: map,
-					  		center: latLng,
-					  		radius: Math.sqrt(ponto.valor_repasse_uniao) * 80
-					  	};
-
-					    // Add the circle for this city to the map.
-					    cityCircle = new google.maps.Circle(convenioOptions);
-
-						//intanciando marcadores
-			            var marker = new google.maps.Marker({
-			              position: latLng,
-			              title: ponto.nome,
-			              map: map
-			            });
+        			var template = $('#convenios-table-tpl').html(); //pega o template
+	        		var html = Mustache.to_html(template, {convenios:data.organizacoes}); //insere as variaveis no template
+	        		$('#table-convenios').append(html); 
 
 
-						google.maps.event.addListener(marker, 'click', function() {
-					          infowindow.setContent('R$' + ponto.valor_repasse_uniao.format(2, 3, '.', ',') +' - ' +ponto.nome);
-					          infowindow.open(map, marker);
-					    });
+					$.each(data.organizacoes, function(index, ponto){
 
-						markers.push(marker);
-						circles.push(cityCircle);
-					});
+						var address = ponto.endereco + ', ' + ponto.cidade + ', ' + ponto.estado;
 
-        		});
+						convertAddressToLatLng(address, function( latLng ){
 
-				markerCluster = new MarkerClusterer(map, markers);
+							convenioOptions = {
+						  		strokeColor: '#0000ff',
+						  		strokeOpacity: 0.8,
+						  		strokeWeight: 2,
+						  		fillColor: '#0000ff',
+						  		fillOpacity: 0.35,
+						  		map: map,
+						  		center: latLng,
+						  		radius: Math.sqrt(ponto.valor_repasse_uniao) * 80
+						  	};
 
-			});
+						    // Add the circle for this city to the map.
+						    cityCircle = new google.maps.Circle(convenioOptions);
+
+							//intanciando marcadores
+				            var marker = new google.maps.Marker({
+				              position: latLng,
+				              title: ponto.nome,
+				              map: map
+				            });
+
+
+							google.maps.event.addListener(marker, 'click', function() {
+						          infowindow.setContent('R$' + ponto.valor_repasse_uniao.format(2, 3, '.', ',') +' - ' +ponto.nome);
+						          infowindow.open(map, marker);
+						    });
+
+							markers.push(marker);
+							circles.push(cityCircle);
+						});
+
+	        		});//endforeach
+
+					markerCluster = new MarkerClusterer(map, markers);
+				}//end if lenght
+
+			}); 
+			
 		}
 
 		carregaDados();
@@ -109,25 +131,16 @@ $('document').ready(function()
 		{
 			var ano = $('#ano option:selected').val()
 				
-			//apaga os markers		
-			jQuery.each(markers, function(i, marker){
-			  	marker.setMap(null);
-			});
-			
-  			markers = [];
-
-			//apaga os circulos
-			jQuery.each(circles, function(i, circle){
-			  	circle.setMap(null);
-			});
-
-			circles = [];
+			clearMap();
 			carregaDados(ano,natureza_juridica);
 
 		});
 
+		$("#ano").chosen().change(function(){
+		    google.maps.event.trigger($(this)[0], 'change');
+		});
 
-		$(".nj-checkbox").change(function() {
+		$("#naturezas-juridicas").chosen().change(function() {
 		    google.maps.event.trigger($(this)[0], 'change');
 		});
 
@@ -135,22 +148,12 @@ $('document').ready(function()
 		{
 
 			var ano = $('#ano option:selected').val()
-				
-			//apaga os markers		
-			jQuery.each(markers, function(i, marker){
-			  	marker.setMap(null);
-			});
-			
-  			markers = [];
+			var natureza_juridica = $('#naturezas-juridicas option:selected').val()
 
-			//apaga os circulos
-			jQuery.each(circles, function(i, circle){
-			  	circle.setMap(null);
-			});
-
-			circles = [];
+			console.log(natureza_juridica);
+							
+			clearMap();
 			carregaDados(ano,natureza_juridica);
-
 		});
 
 

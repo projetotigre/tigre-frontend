@@ -1,7 +1,9 @@
 body, html {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
+
 
 .right-side{
 	height: 90%;
@@ -106,10 +108,10 @@ body, html {
 	border: 3px solid rgba(0, 0, 0, 0.701961);
 	width: 200px;
 	z-index: 999999;
-	height: 500px;
+	height: 400px;
 	background-position: initial initial;
 	background-repeat: initial initial;
-	overflow-y: scroll;
+	overflow: scroll;
 }
 
 .config-box h4{
@@ -122,6 +124,7 @@ body, html {
 	padding: 0;	
 }
 
+.chosen-container-multi .chosen-choices li.search-choice{margin:3px;}
 
 .show-blind
 {

@@ -27,6 +27,8 @@ function years(startYear)
 
 $('document').ready(function(){	
 	
+	$(".chosen").chosen({width:'100%'});
+
 	$('.config-btn').click(function()
 	{
 		if (!$(this).hasClass("open")) 
@@ -50,11 +52,13 @@ $('document').ready(function(){
 		var template = $('#naturezas-juridicas-tpl').html(); //pega o template		
 		var html = Mustache.to_html(template, { naturezas_juridicas:data}); //insere as variaveis no template
 		
-		$('#naturezas-juridicas').html(html); //exibe na div com #areas-atuacao		
+		$('#naturezas-juridicas').append(html); //exibe na div com #areas-atuacao
+		$('#naturezas-juridicas').trigger("chosen:updated");
 	});
 
 	var template = $('#select-ano-tpl').html(); //pega o template		
 	var html = Mustache.to_html(template, { anos: years(2007)}); //insere as variaveis no template
-	$('#ano').html(html); //exibe na div com #areas-atuacao
+	$('#ano').html(html);
+	$('#ano').trigger("chosen:updated");
 
 });
