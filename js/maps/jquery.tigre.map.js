@@ -69,7 +69,7 @@ $('document').ready(function()
 			natureza_juridica = natureza_juridica || '';			
 
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
-			$.getJSON('http://107.170.175.95/api/v1/convenios', { 'ano': ano, 'natureza_juridica': natureza_juridica },function(data){
+			$.getJSON('http://projetotigre.com.br/api/v1/convenios', { 'ano': ano, 'natureza_juridica': natureza_juridica },function(data){
 							
         		if(data.organizacoes.length)
         		{
