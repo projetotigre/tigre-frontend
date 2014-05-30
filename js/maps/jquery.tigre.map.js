@@ -88,7 +88,7 @@ $('document').ready(function()
 
 
 						google.maps.event.addListener(marker, 'click', function() {
-					          infowindow.setContent('R$' + ponto.valor_repasse_uniao +' - ' +ponto.nome);
+					          infowindow.setContent('R$' + ponto.valor_repasse_uniao.format(2, 3, '.', ',') +' - ' +ponto.nome);
 					          infowindow.open(map, marker);
 					    });
 
