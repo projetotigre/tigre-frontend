@@ -24,8 +24,10 @@ body, html {
 .logo img{
 	width: 115px;
 	margin-bottom:5px;
-	margin-right: 25px;
+	/*margin-right: 25px;*/
 }
+
+.logo span{font-size: 10px; font-family: sans-serif;}
 
 .header h1.title{
 	font-size: 1.3em;
