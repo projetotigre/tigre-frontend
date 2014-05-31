@@ -122,8 +122,8 @@ body, html {
 	padding-bottom: 3px;
 }
 .config-box h3{ 
-	margin: 0; 
-	padding: 0;	
+	margin: 20; 
+	padding: 20;	
 }
 
 .chosen-container-multi .chosen-choices li.search-choice{margin:3px;}
@@ -136,4 +136,16 @@ body, html {
     width: 1px;
     height: 1px;
     overflow: hidden;
+}
+
+.chosen-container{
+position:relative;
+display:inline-block;
+vertical-align:middle;
+font-size:12px;
+zoom:1;
+*display:inline;
+-webkit-user-select:none;
+-moz-user-select:none;
+user-select:none
 }
