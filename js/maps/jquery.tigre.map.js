@@ -271,6 +271,8 @@ mark_icon="img/markers/flag_blue_48.png";
 			var natureza_juridica = $('#naturezas-juridicas option:selected').val()
 			var area_atuacao = $('#areas-atuacao option:selected').val()
 
+			console.log(area_atuacao);
+
 			clearMap();
 			carregaDados(ano, natureza_juridica, area_atuacao);
 		});
@@ -285,6 +287,8 @@ mark_icon="img/markers/flag_blue_48.png";
 			var ano = $('#ano option:selected').val()
 			var natureza_juridica = $('#naturezas-juridicas option:selected').val()
 			var area_atuacao = $('#areas-atuacao option:selected').val()
+
+			console.log(area_atuacao);
 
 			clearMap();
 			carregaDados(ano, natureza_juridica, area_atuacao);
