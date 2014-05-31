@@ -104,7 +104,24 @@
                 </select>
             </div>
 
+            <label for="areas-atuacao">Área de atuação:</label>
+            <div class="form-group no-margin">
+                <select name="areas-atuacao" id="areas-atuacao" class="chosen" multiple="multiple" data-placeholder="Selecione" >
+                <script id="areas-atuacao-tpl" type="text/template">
+                    {{#areas_atuacao}}
+                        <option value="{{id}}">{{nome}}</option>                                            
+                    {{/areas_atuacao}}
+                    </script>
+                </select>
+            </div>
+
+
+
         </div>
+
+
+
+
         <!-- End Config Box -->
 
         <!-- header logo: style can be found in header.less -->
