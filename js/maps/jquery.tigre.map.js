@@ -49,7 +49,7 @@ $('document').ready(function()
 		var markerCluster;
 		var markers = [];
 		var circles = [];
-		var ano, natureza_juridica;
+		var ano, natureza_juridica, area_atuacao;
 		var circle_color;
 		var mark_icon;
 
@@ -68,14 +68,15 @@ $('document').ready(function()
 			circles = [];
 		}
 
-		function carregaDados(ano, natureza_juridica)
+		function carregaDados(ano, natureza_juridica, area_atuacao)
 		{
 			ano = ano || 2014;
 			natureza_juridica = natureza_juridica || '';
+			area_atuacao = area_atuacao || '';
 
 			//faz uma requisicação ajax e exibe os dados de acordo com um template
-			$.getJSON('http://projetotigre.com.br/api/v1/convenios', { 'ano': ano, 'natureza_juridica': natureza_juridica },function(data){
-							
+			$.getJSON('http://projetotigre.com.br/api/v1/convenios', { 'ano': ano, 'natureza_juridica': natureza_juridica, 'area_atuacao': area_atuacao },function(data){
+
 				if(data.organizacoes.length)
 				{
 					var template = $('#convenios-table-tpl').html(); //pega o template
@@ -86,36 +87,81 @@ $('document').ready(function()
 
 						var address = ponto.endereco + ', ' + ponto.cidade + ', ' + ponto.estado;
 
-						switch (ano){
-//							case "Entidade Privada Sem Fins Lucrativos":
-							case "2014":
-							circle_color="#3FA7D8"
+						switch (area_atuacao){
+							case "1":
+							//circle_color="#3FA7D8"
+							circle_color="#330000";
 							break;
-							case "2013":
-							circle_color="#F00000";
+							case "2":
+							circle_color="#660000";
 							break;
-							case "2012":
-							circle_color="#AFA000"
+							case "3":
+							circle_color="#990000";
 							break;
-							case "2011":
-							circle_color="#0AFA00"
+							case "4":
+							circle_color="#CC0000";
 							break;
-							case "2010":
-							circle_color="#00AFA0"
+							case "5":
+							circle_color="#FF0000";
 							break;
-							case "2009":
-							circle_color="#000AFA";
+							case "6":
+							circle_color="#FF3300";
 							break;
-							case "2008":
-							circle_color="#0000AF"
+							case "7":
+							circle_color="#FF6600";
 							break;
-							case "2007":
-							circle_color="#AAAAAA"
+							case "8":
+							circle_color="#FF9900";
 							break;
+							case "9":
+							circle_color="#FFCC00";
+							break;
+							case "10":
+							circle_color="#FFFF00";
+							break;
+							case "11":
+							circle_color="#CCFF00";
+							break;
+							case "12":
+							circle_color="#99FF00";
+							break;
+							case "13":
+							circle_color="#33FF00";
+							break;
+							case "14":
+							circle_color="#00FF00";
+							break;
+							case "15":
+							circle_color="#00FF33";
+							break;
+							case "16":
+							circle_color="#00FF66";
+							break;
+							case "17":
+							circle_color="#00FF99";
+							break;
+							case "18":
+							circle_color="#00FFCC";
+							break;
+							case "19":
+							circle_color="#00FFFF";
+							break;
+							case "20":
+							circle_color="#00CCFF";
+							break;
+							case "21":
+							circle_color="#0099FF";
+							break;
+							case "22":
+							circle_color="#0066FF";
+							break;
+							case "23":
+							circle_color="#0033FF";
+							break;
+
 						}
 
 						convertAddressToLatLng(address, function( latLng ){
-
 							convenioOptions = {
 								strokeColor: circle_color,
 								strokeOpacity: 0.8,
@@ -137,33 +183,31 @@ $('document').ready(function()
 //								map: map
 //		            				});
 
-							mark_icon="img/markers/flag_blue_48.png"
 
 							switch (natureza_juridica){
-								case "Entidade Privada Sem Fins Lucrativos":
-								mark_icon="img/markers/flag_blue_48.png"
-								break;
-								case "2013":
-								mark_icon="img/markers/flag_red_48.png";
-								break;
-								case "2012":
-								mark_icon="img/markers/flag_green_48.png"
-								break;
-								case "2011":
-								mark_icon="img/markers/flag_blue_48.png"
-								break;
-								case "2010":
-								mark_icon="img/markers/flag_blue_48.png"
-								break;
-								case "2009":
+
+								case "1":
 								mark_icon="img/markers/flag_blue_48.png";
 								break;
-								case "2008":
-								mark_icon="img/markers/flag_blue_48.png"
+								case "2":
+								mark_icon="img/markers/flag_red_48.png";
 								break;
-								case "2007":
-								mark_icon="img/markers/flag_blue_48.png"
+								case "3":
+								mark_icon="img/markers/flag_green_48.png";
 								break;
+								case "4":
+								mark_icon="img/markers/flag_yellow_48.png";
+								break;
+								case "5":
+								mark_icon="img/markers/flag_cyan_48.png";
+								break;
+								case "6":
+								mark_icon="img/markers/flag_blue_48.png";
+								break;
+								case "7":
+								mark_icon="img/markers/flag_blue_48.png";
+								break;
+
 							}
 							
 							var marker = new MarkerWithLabel({
@@ -204,9 +248,13 @@ $('document').ready(function()
 		google.maps.event.addDomListener($('#ano')[0], 'change', function() 
 		{
 			var ano = $('#ano option:selected').val()
-				
+			var natureza_juridica = $('#naturezas-juridicas option:selected').val()
+			var area_atuacao = $('#areas-atuacao option:selected').val()
+
+			console.log(area_atuacao);
+
 			clearMap();
-			carregaDados(ano,natureza_juridica);
+			carregaDados(ano, natureza_juridica, area_atuacao);
 
 		});
 
@@ -220,11 +268,10 @@ $('document').ready(function()
 
 			var ano = $('#ano option:selected').val()
 			var natureza_juridica = $('#naturezas-juridicas option:selected').val()
+			var area_atuacao = $('#areas-atuacao option:selected').val()
 
-			console.log(natureza_juridica);
-							
 			clearMap();
-			carregaDados(ano,natureza_juridica);
+			carregaDados(ano, natureza_juridica, area_atuacao);
 		});
 
 		$("#naturezas-juridicas").chosen().change(function() {
@@ -236,18 +283,15 @@ $('document').ready(function()
 
 			var ano = $('#ano option:selected').val()
 			var natureza_juridica = $('#naturezas-juridicas option:selected').val()
-			var areas_atuacao = $('#areas-atuacao option:selected').val()
+			var area_atuacao = $('#areas-atuacao option:selected').val()
 
-			console.log(areas_atuacao);
-							
 			clearMap();
-			carregaDados(ano,natureza_juridica);
+			carregaDados(ano, natureza_juridica, area_atuacao);
 		});
 
 		$("#areas-atuacao").chosen().change(function() {
 		    google.maps.event.trigger($(this)[0], 'change');
 		});
-
 
 	}
 
