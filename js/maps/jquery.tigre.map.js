@@ -175,15 +175,8 @@ $('document').ready(function()
 
 							// Add the circle for this city to the map.
 							cityCircle = new google.maps.Circle(convenioOptions);
-
-							//intanciando marcadores
-//							var marker = new google.maps.Marker({
-//								position: latLng,
-//								title: ponto.nome,
-//								map: map
-//		            				});
-
-mark_icon="img/markers/flag_blue_48.png";
+	
+							mark_icon="img/markers/flag_blue_48.png";
 
 							switch (natureza_juridica){
 
@@ -225,9 +218,34 @@ mark_icon="img/markers/flag_blue_48.png";
 								labelStyle: {opacity: 0.75}
 							});
 
+							var boxText = document.createElement("div");
+        						boxText.innerHTML = 'Valor do Repasse = R$' + ponto.valor_repasse_uniao.format(2, 3, '.', ',') +' <BR> ' +ponto.nome;
+
+							var InfoBoxOptions = {
+		 						content: boxText,
+								disableAutoPan: false,
+								maxWidth: 0,
+								pixelOffset: new google.maps.Size(-140, 0),
+								zIndex: null,
+								boxStyle: { 
+									//background: "url('tipbox.gif') no-repeat",
+									background: "#FFFFFF",
+									opacity: 0.8,
+									width: "280px"
+								},
+								closeBoxMargin: "2px 2px 2px 2px",
+								closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+								infoBoxClearance: new google.maps.Size(1, 1),
+								isHidden: false,
+								pane: "floatPane",
+								enableEventPropagation: false
+
+							};
+
+
 							google.maps.event.addListener(marker, 'click', function() {
-								infowindow.setContent('R$' + ponto.valor_repasse_uniao.format(2, 3, '.', ',') +' - ' +ponto.nome);
-								infowindow.open(map, marker);
+								var ib = new InfoBox(InfoBoxOptions);
+								ib.open(map, marker);		
 							});
 
 							markers.push(marker);
