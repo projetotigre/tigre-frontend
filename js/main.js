@@ -47,20 +47,20 @@ $('document').ready(function(){
 
 
 	//faz uma requisicação ajax e exibe os dados de acordo com um template
-	$.getJSON('http://projetotigre.com.br/api/v1/naturezas_juridicas', function(data){
+	$.getJSON(BASE_URL + '/api/v1/naturezas_juridicas', function(result){
 
 		var template = $('#naturezas-juridicas-tpl').html(); //pega o template		
-		var html = Mustache.to_html(template, { naturezas_juridicas:data}); //insere as variaveis no template
+		var html = Mustache.to_html(template, { naturezas_juridicas:result.data}); //insere as variaveis no template
 		
 		$('#naturezas-juridicas').append(html); //exibe na div com #naturezas-juridicas
 		$('#naturezas-juridicas').trigger("chosen:updated");
 	});
 
 	//faz uma requisicação ajax e exibe os dados de acordo com um template
-	$.getJSON('http://projetotigre.com.br/api/v1/areas_atuacao', function(data){
+	$.getJSON(BASE_URL + '/api/v1/areas_atuacao', function(result){
 
 		var template = $('#areas-atuacao-tpl').html(); //pega o template		
-		var html = Mustache.to_html(template, { areas_atuacao:data}); //insere as variaveis no template
+		var html = Mustache.to_html(template, { areas_atuacao:result.data}); //insere as variaveis no template
 		
 		$('#areas-atuacao').append(html); //exibe na div com #areas-atuacao
 		$('#areas-atuacao').trigger("chosen:updated");
