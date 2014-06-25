@@ -95,11 +95,17 @@ $('document').ready(function()
 							'#00FF33', '#00FF66', '#00FF99', '#00FFCC', '#00FFFF', '#00CCFF', '#0099FF',
 							'#0066FF', '#0033FF'
 						];
-						console.log(ponto.natureza_juridica_id);
 
-						console.log(circle_colors[ponto.natureza_juridica_id]);
+						var flag_colors = [
+							'blue', 'red', 'green', 'yellow', 'cyan', 'blue'
+						];
+
+						mark_icon="img/markers/flag_" + flag_colors[ponto.natureza_juridica_id] + "_48.png";
 
 						
+						console.log(ponto.natureza_juridica_id);
+						console.log(circle_colors[ponto.natureza_juridica_id]);
+
 						convenioOptions = {
 							strokeColor: circle_colors[ponto.natureza_juridica_id],
 							strokeOpacity: 0.8,
@@ -113,34 +119,7 @@ $('document').ready(function()
 
 						// Add the circle for this city to the map.
 						cityCircle = new google.maps.Circle(convenioOptions);
-
-						mark_icon="img/markers/flag_blue_48.png";
-
-						switch (natureza_juridica){
-
-							case "1":
-							mark_icon="img/markers/flag_blue_48.png";
-							break;
-							case "2":
-							mark_icon="img/markers/flag_red_48.png";
-							break;
-							case "3":
-							mark_icon="img/markers/flag_green_48.png";
-							break;
-							case "4":
-							mark_icon="img/markers/flag_yellow_48.png";
-							break;
-							case "5":
-							mark_icon="img/markers/flag_cyan_48.png";
-							break;
-							case "6":
-							mark_icon="img/markers/flag_blue_48.png";
-							break;
-							case "7":
-							mark_icon="img/markers/flag_blue_48.png";
-							break;
-
-						}
+					
 						
 						var marker = new MarkerWithLabel({
 							position: latLng,
@@ -148,8 +127,8 @@ $('document').ready(function()
 							raiseOnDrag: false,
 							map: map,
 							icon: mark_icon,
-//								icon: 'img/markers/flag_blue_48.png',
-//								labelContent: 'R$' + ponto.valor_repasse_uniao,
+							//icon: 'img/markers/flag_blue_48.png',
+							//labelContent: 'R$' + ponto.valor_repasse_uniao,
 							labelContent: natureza_juridica,
 							labelAnchor: new google.maps.Point(22, 0),
 							labelClass: "labels", // the CSS class for the label
